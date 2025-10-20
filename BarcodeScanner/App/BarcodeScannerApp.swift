@@ -14,7 +14,7 @@ struct BarcodeScannerApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ScannedCodesListView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
