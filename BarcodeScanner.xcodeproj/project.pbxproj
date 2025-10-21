@@ -16,6 +16,8 @@
 		73ABFC732EA51D9A007645C8 /* ScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73ABFC722EA51D9A007645C8 /* ScannerView.swift */; };
 		73ABFC9D2EA53E57007645C8 /* ScannedCodesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73ABFC9C2EA53E57007645C8 /* ScannedCodesListViewModel.swift */; };
 		73ABFCA02EA54B72007645C8 /* ScannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73ABFC9F2EA54B72007645C8 /* ScannerViewModel.swift */; };
+		73BCB9352EA6B1DF004B6A1A /* CameraVCRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73BCB9342EA6B1DF004B6A1A /* CameraVCRepresentable.swift */; };
+		73BCB9372EA6B29E004B6A1A /* CameraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73BCB9362EA6B29E004B6A1A /* CameraVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +30,8 @@
 		73ABFC722EA51D9A007645C8 /* ScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerView.swift; sourceTree = "<group>"; };
 		73ABFC9C2EA53E57007645C8 /* ScannedCodesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedCodesListViewModel.swift; sourceTree = "<group>"; };
 		73ABFC9F2EA54B72007645C8 /* ScannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewModel.swift; sourceTree = "<group>"; };
+		73BCB9342EA6B1DF004B6A1A /* CameraVCRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraVCRepresentable.swift; sourceTree = "<group>"; };
+		73BCB9362EA6B29E004B6A1A /* CameraVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraVC.swift; sourceTree = "<group>"; };
 		73E7589D2EA24EB9007DFFB9 /* BarcodeScanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BarcodeScanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -65,6 +69,7 @@
 		73ABFC972EA53CF2007645C8 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				73BCB9332EA6B1CB004B6A1A /* Camera */,
 				73ABFC9E2EA54B5E007645C8 /* Scanner */,
 				73ABFC9B2EA53D7E007645C8 /* ScannedCodesList */,
 			);
@@ -104,6 +109,15 @@
 				73ABFC9F2EA54B72007645C8 /* ScannerViewModel.swift */,
 			);
 			path = Scanner;
+			sourceTree = "<group>";
+		};
+		73BCB9332EA6B1CB004B6A1A /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				73BCB9342EA6B1DF004B6A1A /* CameraVCRepresentable.swift */,
+				73BCB9362EA6B29E004B6A1A /* CameraVC.swift */,
+			);
+			path = Camera;
 			sourceTree = "<group>";
 		};
 		73E758942EA24EB9007DFFB9 = {
@@ -201,7 +215,9 @@
 				73ABFC732EA51D9A007645C8 /* ScannerView.swift in Sources */,
 				73ABFC712EA51A71007645C8 /* ScannedCode+helper.swift in Sources */,
 				73ABFC6F2EA51A5A007645C8 /* Persistence.swift in Sources */,
+				73BCB9372EA6B29E004B6A1A /* CameraVC.swift in Sources */,
 				73ABFCA02EA54B72007645C8 /* ScannerViewModel.swift in Sources */,
+				73BCB9352EA6B1DF004B6A1A /* CameraVCRepresentable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -339,6 +355,7 @@
 				DEVELOPMENT_TEAM = VS5A9QFHJ4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -372,6 +389,7 @@
 				DEVELOPMENT_TEAM = VS5A9QFHJ4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

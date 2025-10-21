@@ -10,5 +10,8 @@ import Combine
 import CoreGraphics
 
 class ScannerViewModel: ObservableObject {
-    @Published var rectOfInterest: CGRect? /*= CGRect(x: 100, y: 550, width: 100, height: 220)*/
+    @Published var rectOfInterest: CGRect?
+    @Published var isFlashOn = false
+    @Published var error: Error?
+    @Published var scannedCode = ""
 }

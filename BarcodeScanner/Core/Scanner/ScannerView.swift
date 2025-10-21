@@ -15,6 +15,8 @@ struct ScannerView: View {
     var body: some View {
         GeometryReader { geometry in
             ZStack {
+                CameraVCRepresentable(isFlashOn: $vm.isFlashOn, error: $vm.error, scannedCode: $vm.scannedCode, rectOfInterest: $vm.rectOfInterest)
+                
                 if let rect = vm.rectOfInterest {
                     RectOfInterest(minX: rect.minX, minY: rect.minY, midX: rect.midX, midY: rect.midY, width: rect.width, height: rect.height, backgoundLenght: 40)
                 } else {
@@ -25,9 +27,23 @@ struct ScannerView: View {
                     let midY: CGFloat = size / 2 + y
                     RectOfInterest(minX: x, minY: y, midX: midX, midY: midY, width: size, height: size, backgoundLenght: 40)
                 }
+                
+                flashlight
             }
         }
         .ignoresSafeArea()
+    }
+    
+    var flashlight: some View {
+        Button {
+            vm.isFlashOn.toggle()
+        } label: {
+            Image(systemName: vm.isFlashOn ? "flashlight.on.circle.fill" : "flashlight.off.circle.fill")
+                
+        }
+        .font(.custom("flash", size: 50))
+        .foregroundStyle(vm.isFlashOn ? Color.white : Color.gray)
+        .offset(y: 250)
     }
 }
 
@@ -58,6 +74,7 @@ private struct RectOfInterest: View {
             .overlay {
                 RoundedAngels()
                     .rotation(Angle(degrees: degrees))
+                    .stroke(Color.white, lineWidth: 6)
             }
             .position(x: x, y: y)
     }
@@ -66,14 +83,14 @@ private struct RectOfInterest: View {
 private struct RoundedAngels: Shape {
     func path(in rect: CGRect) -> Path {
         var path = Path()
-        path.move(to: CGPoint(x: 0, y: 40))
+        path.move(to: CGPoint(x: 0, y: 30))
         path.addCurve(
-            to: CGPoint(x: 40, y: 0),
-            control1: CGPoint(x: 0, y: -8),
-            control2: CGPoint(x: -8, y: 0)
+            to: CGPoint(x: 30, y: 0),
+            control1: CGPoint(x: 0, y: -5),
+            control2: CGPoint(x: -5, y: 0)
         )
         
-        return path.strokedPath(.init(lineWidth: 7, lineCap: .round))
+        return path.strokedPath(.init(lineCap: .round))
     }
 }
 
