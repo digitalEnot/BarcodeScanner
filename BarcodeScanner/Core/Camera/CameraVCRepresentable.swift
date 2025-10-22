@@ -20,6 +20,7 @@ struct CameraVCRepresentable: UIViewControllerRepresentable {
     @Binding var error: Error?
     @Binding var scannedCode: String
     @Binding var rectOfInterest: CGRect?
+    @Binding var path: NavigationPath
     let viewModel = ViewModel()
     
     func makeUIViewController(context: Context) -> CameraVC {
@@ -49,6 +50,7 @@ struct CameraVCRepresentable: UIViewControllerRepresentable {
         func didFindCode(_ code: String) {
             delegate.viewModel.shouldUpdateView = false
             self.delegate.scannedCode = code
+            delegate.path.append("EditCodeName")
         }
         
         func didEndWithError(_ error: Error) {

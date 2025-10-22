@@ -11,9 +11,9 @@ import CoreData
 struct ScannedCodesListView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \ScannedCode.scannedDate, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \ScannedCodeEntity.scannedDate, ascending: true)],
         animation: .default)
-    private var items: FetchedResults<ScannedCode>
+    private var items: FetchedResults<ScannedCodeEntity>
     @State private var showScannerView = false
     @StateObject private var vm = ScannedCodesListViewModel()
 

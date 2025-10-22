@@ -8,6 +8,6 @@
 import Foundation
 import CoreData
 
-extension ScannedCode {
+extension ScannedCodeEntity {
     
 }

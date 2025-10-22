@@ -11,27 +11,35 @@ struct ScannerView: View {
     
     @Environment(\.dismiss) var dismiss
     @StateObject var vm = ScannerViewModel()
+    @State private var path = NavigationPath() // не переместить ли на уровень ниже???
     
     var body: some View {
-        GeometryReader { geometry in
-            ZStack {
-                CameraVCRepresentable(isFlashOn: $vm.isFlashOn, error: $vm.error, scannedCode: $vm.scannedCode, rectOfInterest: $vm.rectOfInterest)
-                
-                if let rect = vm.rectOfInterest {
-                    RectOfInterest(minX: rect.minX, minY: rect.minY, midX: rect.midX, midY: rect.midY, width: rect.width, height: rect.height, backgoundLenght: 40)
-                } else {
-                    let size: CGFloat = geometry.size.width - 90
-                    let x: CGFloat = (geometry.size.width - size) / 2
-                    let y: CGFloat = (geometry.size.height - size) / 2
-                    let midX: CGFloat = size / 2 + x
-                    let midY: CGFloat = size / 2 + y
-                    RectOfInterest(minX: x, minY: y, midX: midX, midY: midY, width: size, height: size, backgoundLenght: 40)
+        NavigationStack(path: $path) {
+            GeometryReader { geometry in
+                ZStack {
+                    CameraVCRepresentable(isFlashOn: $vm.isFlashOn, error: $vm.error, scannedCode: $vm.scannedCode, rectOfInterest: $vm.rectOfInterest, path: $path)
+                    
+                    if let rect = vm.rectOfInterest {
+                        RectOfInterest(minX: rect.minX, minY: rect.minY, midX: rect.midX, midY: rect.midY, width: rect.width, height: rect.height, backgoundLenght: 40)
+                    } else {
+                        let size: CGFloat = geometry.size.width - 90
+                        let x: CGFloat = (geometry.size.width - size) / 2
+                        let y: CGFloat = (geometry.size.height - size) / 2
+                        let midX: CGFloat = size / 2 + x
+                        let midY: CGFloat = size / 2 + y
+                        RectOfInterest(minX: x, minY: y, midX: midX, midY: midY, width: size, height: size, backgoundLenght: 40)
+                    }
+                    
+                    flashlight
                 }
-                
-                flashlight
             }
+            .navigationDestination(for: String.self) { selection in
+                if selection == "EditCodeName" {
+                    EditCodeNameView(scannedCode: vm.scannedCode, dismiss: dismiss)
+                }
+            }
+            .ignoresSafeArea()
         }
-        .ignoresSafeArea()
     }
     
     var flashlight: some View {

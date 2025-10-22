@@ -62,11 +62,7 @@ class CameraVC: UIViewController {
             return
         }
         
-        DispatchQueue.main.async { [weak self] in
-            self?.delegate?.didFindCode("69") // TODO: все обращения к делегату должны быть на main потоке!!!
-        }
-        
-        guard device.hasTorch else {
+        guard device.hasTorch else { // TODO: все обращения к делегату должны быть на main потоке!!!
             self.delegate?.didEndWithError(URLError(.unknown)) // поменять тип ошибки
             return
         }
@@ -151,7 +147,7 @@ extension CameraVC: AVCaptureMetadataOutputObjectsDelegate {
             
             guard let transformedBounds = previewLayer?.layerRectConverted(fromMetadataOutputRect: bounds) else { return }
             delegate?.didGetBounds(transformedBounds)
-//            captureSession.stopRunning()
+            captureSession.stopRunning()
             delegate?.didFindCode(code ?? "unable to read")
             
         } else {
