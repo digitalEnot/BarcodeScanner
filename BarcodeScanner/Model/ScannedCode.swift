@@ -29,4 +29,5 @@ struct ScannedCode: Decodable {
 enum CodeType: String {
     case qr = "qr"
     case barcode = "barcode"
+    case none
 }

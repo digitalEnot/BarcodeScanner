@@ -15,7 +15,6 @@ struct UnderlinedTextFieldStyle: TextFieldStyle {
         VStack(spacing: 0) {
             configuration
                 .padding(.vertical, 8)
-                .foregroundColor(.black)
                 .multilineTextAlignment(.center)
             Rectangle()
                 .frame(height: 1)

@@ -22,11 +22,4 @@ class NetworkManager {
         }
         return output.data
     }
-    
-    static func handleCompletion(completion: Subscribers.Completion<Error>) {
-        switch completion {
-            case .finished: break
-            case .failure(let error): print("произошла ошибка при получение информации о просканированном коде. \(error)") // заменить
-        }
-    }
 }

@@ -19,7 +19,12 @@ struct ScannedCodesListView: View {
 
     var body: some View {
         NavigationStack {
-            Text("hello world")
+            List {
+                ForEach(items) { code in
+                    Text(code.title ?? "")
+                }
+                .onDelete(perform: deleteCodes)
+            }
             .navigationTitle("ScannedCodes")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
@@ -30,6 +35,16 @@ struct ScannedCodesListView: View {
             }
             .sheet(isPresented: $showScannerView) {
                 ScannerView()
+            }
+        }
+    }
+    
+    private func deleteCodes(offsets: IndexSet) {
+        withAnimation {
+            do {
+                try ScannedCodeEntity.delete(at: offsets, for: Array(items))
+            } catch {
+                print("Возникла ошибка при удалении кода \(error)")
             }
         }
     }

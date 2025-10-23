@@ -144,12 +144,16 @@ extension CameraVC: AVCaptureMetadataOutputObjectsDelegate {
         if let object = metadataObjects.first as? AVMetadataMachineReadableCodeObject {
             let code = object.stringValue
             let bounds = object.bounds
+            let type: CodeType = (object.type == .qr) ? .qr : .barcode
             
             guard let transformedBounds = previewLayer?.layerRectConverted(fromMetadataOutputRect: bounds) else { return }
             delegate?.didGetBounds(transformedBounds)
+            if let code = code {
+                delegate?.didFindCode(code, type: type)
+            } else {
+                self.delegate?.didEndWithError(URLError(.unknown)) // поменять тип ошибки
+            }
             captureSession.stopRunning()
-            delegate?.didFindCode(code ?? "unable to read")
-            
         } else {
             delegate?.didGetBounds(nil) // TODO: вопрос надо ли это??? (+ надо добавить сообщение при получении разрешения на пользование камеры)
         }

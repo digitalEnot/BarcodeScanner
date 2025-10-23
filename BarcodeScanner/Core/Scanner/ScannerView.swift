@@ -17,7 +17,7 @@ struct ScannerView: View {
         NavigationStack(path: $path) {
             GeometryReader { geometry in
                 ZStack {
-                    CameraVCRepresentable(isFlashOn: $vm.isFlashOn, error: $vm.error, scannedCode: $vm.scannedCode, rectOfInterest: $vm.rectOfInterest, path: $path)
+                    CameraVCRepresentable(isFlashOn: $vm.isFlashOn, error: $vm.error, scannedCode: $vm.scannedCode, rectOfInterest: $vm.rectOfInterest, codeType: $vm.codeType, path: $path)
                     
                     if let rect = vm.rectOfInterest {
                         RectOfInterest(minX: rect.minX, minY: rect.minY, midX: rect.midX, midY: rect.midY, width: rect.width, height: rect.height, backgoundLenght: 40)
@@ -35,7 +35,7 @@ struct ScannerView: View {
             }
             .navigationDestination(for: String.self) { selection in
                 if selection == "EditCodeName" {
-                    EditCodeNameView(scannedCode: vm.scannedCode, dismiss: dismiss)
+                    EditCodeNameView(scannedCode: vm.scannedCode, dismiss: dismiss, codeType: vm.codeType)
                 }
             }
             .ignoresSafeArea()

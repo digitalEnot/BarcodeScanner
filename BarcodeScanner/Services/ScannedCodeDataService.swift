@@ -12,25 +12,30 @@ class ScannedCodeDataService {
     @Published var codeData: ScannedCode?
     var codeSubscription: AnyCancellable?
     
-    init(scannedCode: String) {
-        getCodeData(with: scannedCode)
-        print(scannedCode)
-    }
-    
     func getCodeData(with code: String) {
         guard let url = URL(string: "https://world.openfoodfacts.net/api/v2/product/{\(code)}") else { return }
         var components = URLComponents(url: url, resolvingAgainstBaseURL: true)!
         let queryItems: [URLQueryItem] = [
-          URLQueryItem(name: "fields", value: "product_name,nutriscore_data,brands,ingredients"),
+            URLQueryItem(name: "fields", value: "product_name,nutriscore_data,brands,ingredients"),
         ]
         components.queryItems = components.queryItems.map { $0 + queryItems } ?? queryItems
         
         codeSubscription = NetworkManager.download(url: url)
             .decode(type: ScannedCodeItem.self, decoder: JSONDecoder())
             .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: NetworkManager.handleCompletion, receiveValue: { [weak self] (codeData) in
+            .sink(receiveCompletion: handleCompletion, receiveValue: { [weak self] (codeData) in
+                print(codeData)
                 self?.codeData = codeData.product
                 self?.codeSubscription?.cancel()
             })
+    }
+    
+    private func handleCompletion(completion: Subscribers.Completion<Error>) {
+        switch completion {
+        case .finished: break
+        case .failure:
+            print("Информация о коде не найдена в базе. Код будет сохранен без доп. информации") // заменить на ошибку/алерт
+            codeData = nil
+        }
     }
 }

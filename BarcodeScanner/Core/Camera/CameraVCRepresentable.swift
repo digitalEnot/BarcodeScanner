@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 
 protocol CameraVCDelegate: AnyObject {
-    func didFindCode(_ code: String)
+    func didFindCode(_ code: String, type: CodeType)
     func didEndWithError(_ error: Error)
     func didGetBounds(_ bounds: CGRect?)
     func turnOffFlash()
@@ -20,6 +20,7 @@ struct CameraVCRepresentable: UIViewControllerRepresentable {
     @Binding var error: Error?
     @Binding var scannedCode: String
     @Binding var rectOfInterest: CGRect?
+    @Binding var codeType: CodeType
     @Binding var path: NavigationPath
     let viewModel = ViewModel()
     
@@ -47,9 +48,10 @@ struct CameraVCRepresentable: UIViewControllerRepresentable {
             self.delegate = delegate
         }
         
-        func didFindCode(_ code: String) {
+        func didFindCode(_ code: String, type: CodeType) {
             delegate.viewModel.shouldUpdateView = false
             self.delegate.scannedCode = code
+            self.delegate.codeType = type
             delegate.path.append("EditCodeName")
         }
         

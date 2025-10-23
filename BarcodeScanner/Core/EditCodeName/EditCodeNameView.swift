@@ -15,13 +15,13 @@ struct EditCodeNameView: View {
     @Environment(\.managedObjectContext) var context
     private var dismiss: DismissAction
     
-    init(scannedCode: String, dismiss: DismissAction) {
-        self._vm = StateObject(wrappedValue: EditCodeNameViewModel(scannedCode: scannedCode))
+    init(scannedCode: String, dismiss: DismissAction, codeType: CodeType) {
+        self._vm = StateObject(wrappedValue: EditCodeNameViewModel(scannedCode: scannedCode, codeType: codeType))
         self.dismiss = dismiss
     }
     
     var body: some View {
-        if let _ = vm.scannedCodeData {
+        if !vm.showProgressView {
             VStack(spacing: 40) {
                 Text("Введите название отсканированного кода:")
                     .font(.headline)
@@ -38,7 +38,9 @@ struct EditCodeNameView: View {
                         }
                     }
                 
-                Button(action: dismiss.callAsFunction) {
+                Button {
+                    saveScannedCode(codeType: vm.codeType)
+                } label: {
                     Text("Готово!")
                         .foregroundColor(.black)
                         .frame(width: 200)
@@ -53,5 +55,26 @@ struct EditCodeNameView: View {
         } else {
             ProgressView()
         }
+    }
+    
+    private func saveScannedCode(codeType: CodeType) {
+        switch codeType {
+        case .qr:
+            do {
+                try ScannedCodeEntity.saveQrCode(link: vm.scannedCode, title: vm.title, context: context)
+            } catch {
+                print("Произошла ошибка при сохранении кода \(error)") // заменить
+            }
+        case .barcode:
+            do {
+                try ScannedCodeEntity.saveBarcode(vm.scannedCodeData, title: vm.title, context: context)
+            } catch {
+                print("Произошла ошибка при сохранении кода \(error)") // заменить
+            }
+        case .none:
+            print("Произошла ошибка при сохранении кода") // заменить
+        }
+        
+        dismiss()
     }
 }

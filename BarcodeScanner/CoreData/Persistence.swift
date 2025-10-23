@@ -20,3 +20,14 @@ struct PersistenceController {
         })
     }
 }
+
+extension NSManagedObjectContext {
+    
+    func saveContext() throws {
+        if self.hasChanges {
+            do {
+                try self.save()
+            }
+        }
+    }
+}

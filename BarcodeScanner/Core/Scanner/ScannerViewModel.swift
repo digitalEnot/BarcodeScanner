@@ -7,11 +7,11 @@
 
 import Foundation
 import Combine
-import CoreGraphics
 
 class ScannerViewModel: ObservableObject {
     @Published var rectOfInterest: CGRect?
     @Published var isFlashOn = false
     @Published var error: Error?
     @Published var scannedCode = ""
+    @Published var codeType: CodeType = .none
 }
