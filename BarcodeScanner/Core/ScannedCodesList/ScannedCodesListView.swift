@@ -21,7 +21,7 @@ struct ScannedCodesListView: View {
         NavigationStack {
             List {
                 ForEach(items) { code in
-                    Text(code.title ?? "")
+                    ScannedCodesRow(scannedCode: code)
                 }
                 .onDelete(perform: deleteCodes)
             }

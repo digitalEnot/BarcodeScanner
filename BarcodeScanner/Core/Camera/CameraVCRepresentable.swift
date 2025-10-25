@@ -20,7 +20,7 @@ struct CameraVCRepresentable: UIViewControllerRepresentable {
     @Binding var error: Error?
     @Binding var scannedCode: String
     @Binding var rectOfInterest: CGRect?
-    @Binding var codeType: CodeType
+    @Binding var codeType: CodeType?
     @Binding var path: NavigationPath
     let viewModel = ViewModel()
     

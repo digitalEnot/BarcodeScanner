@@ -10,6 +10,7 @@ import Combine
 
 class ScannedCodeDataService {
     @Published var codeData: ScannedCode?
+    @Published var error: Error?
     var codeSubscription: AnyCancellable?
     
     func getCodeData(with code: String) {
@@ -34,7 +35,7 @@ class ScannedCodeDataService {
         switch completion {
         case .finished: break
         case .failure:
-            print("Информация о коде не найдена в базе. Код будет сохранен без доп. информации") // заменить на ошибку/алерт
+            error = URLError(.cancelled) // заменить на "Информация о коде не найдена в базе. Код будет сохранен без доп. информации"
             codeData = nil
         }
     }

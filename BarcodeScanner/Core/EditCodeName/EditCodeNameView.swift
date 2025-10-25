@@ -15,7 +15,7 @@ struct EditCodeNameView: View {
     @Environment(\.managedObjectContext) var context
     private var dismiss: DismissAction
     
-    init(scannedCode: String, dismiss: DismissAction, codeType: CodeType) {
+    init(scannedCode: String, dismiss: DismissAction, codeType: CodeType?) {
         self._vm = StateObject(wrappedValue: EditCodeNameViewModel(scannedCode: scannedCode, codeType: codeType))
         self.dismiss = dismiss
     }
@@ -57,7 +57,11 @@ struct EditCodeNameView: View {
         }
     }
     
-    private func saveScannedCode(codeType: CodeType) {
+    private func saveScannedCode(codeType: CodeType?) {
+        guard let codeType else {
+            print("Произошла ошибка при сохранении кода") // заменить
+            return
+        }
         switch codeType {
         case .qr:
             do {
@@ -71,8 +75,6 @@ struct EditCodeNameView: View {
             } catch {
                 print("Произошла ошибка при сохранении кода \(error)") // заменить
             }
-        case .none:
-            print("Произошла ошибка при сохранении кода") // заменить
         }
         
         dismiss()

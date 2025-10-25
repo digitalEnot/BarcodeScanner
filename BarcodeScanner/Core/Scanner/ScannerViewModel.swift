@@ -13,5 +13,5 @@ class ScannerViewModel: ObservableObject {
     @Published var isFlashOn = false
     @Published var error: Error?
     @Published var scannedCode = ""
-    @Published var codeType: CodeType = .none
+    @Published var codeType: CodeType?
 }
