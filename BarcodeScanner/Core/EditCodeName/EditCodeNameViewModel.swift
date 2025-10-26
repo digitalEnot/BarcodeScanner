@@ -42,10 +42,23 @@ class EditCodeNameViewModel: ObservableObject {
             }
         case .barcode:
             do {
-                try ScannedCodeEntity.saveBarcode(scannedCodeData, title: title, context: context)
+                try ScannedCodeEntity.saveBarcode(scannedCodeData, code: scannedCode, title: title, context: context)
             } catch {
                 print("Произошла ошибка при сохранении кода \(error)") // заменить
             }
+        }
+    }
+    
+    private func checkIfCodeInDataBase() {
+        guard let codeType else { return }
+        do {
+            let result = try ScannedCodeEntity.isCodeAlreadySaved(code: scannedCode, type: codeType, context: context)
+            if result {
+                error = URLError(.unknown) // замнить на код уже есть в базе данных
+                print("уже есть") // убрать
+            }
+        } catch {
+            self.error = error
         }
     }
     
@@ -67,6 +80,7 @@ class EditCodeNameViewModel: ObservableObject {
                 scannedCodeData = returnedData
                 title = returnedData?.productName ?? ""
                 showProgressView = false
+                checkIfCodeInDataBase()
             }
             .store(in: &cancellables)
         

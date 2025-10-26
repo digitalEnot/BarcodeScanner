@@ -12,17 +12,23 @@ struct ScannedCodesRow: View {
         
     var body: some View {
         HStack {
-            VStack {
+            VStack(alignment: .leading) {
                 Text(title)
+                    .font(.headline)
+                    .lineLimit(1)
                 
                 if let underTitle = underTitle {
                     Text(underTitle)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                        .lineLimit(1)
                 }
             }
             
             Spacer()
             
-            Text(typeText)
+            Image(systemName: typeImage)
+                .font(.system(size: 20))
         }
     }
     
@@ -39,11 +45,14 @@ struct ScannedCodesRow: View {
         }
     }
     
-    private var typeText: String {
-        scannedCode.type ?? ""
+    private var typeImage: String {
+        switch type {
+        case .barcode: "barcode"
+        case .qr: "qrcode"
+        }
     }
     
     private var type: CodeType {
-        CodeType(rawValue: typeText) ?? .qr
+        CodeType(rawValue: scannedCode.type ?? "") ?? .qr
     }
 }

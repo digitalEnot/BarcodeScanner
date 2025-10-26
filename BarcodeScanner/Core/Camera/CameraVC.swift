@@ -43,6 +43,9 @@ class CameraVC: UIViewController {
         self.setFlashlightTo(false)
         sessionQueue.async { [weak self] in
             self?.captureSession.stopRunning()
+            DispatchQueue.main.async { [weak self] in
+                self?.delegate?.didGetBounds(nil)
+            }
         }
     }
     
@@ -149,7 +152,9 @@ extension CameraVC: AVCaptureMetadataOutputObjectsDelegate {
             guard let transformedBounds = previewLayer?.layerRectConverted(fromMetadataOutputRect: bounds) else { return }
             delegate?.didGetBounds(transformedBounds)
             if let code = code {
-                delegate?.didFindCode(code, type: type)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                    self?.delegate?.didFindCode(code, type: type)
+                }
             } else {
                 self.delegate?.didEndWithError(URLError(.unknown)) // поменять тип ошибки
             }

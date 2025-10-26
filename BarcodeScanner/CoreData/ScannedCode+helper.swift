@@ -16,26 +16,23 @@ extension ScannedCodeEntity {
         codeEntity.scannedDate = Date()
         codeEntity.link = link
         codeEntity.type = "qr"
-        
+        codeEntity.code = link
         try context.save()
     }
     
-    static func saveBarcode(_ scannedCode: ScannedCode?, title: String, context: NSManagedObjectContext) throws {
+    static func saveBarcode(_ scannedCode: ScannedCode?, code: String, title: String, context: NSManagedObjectContext) throws {
         let codeEntity = ScannedCodeEntity(context: context)
         
+        codeEntity.id = UUID()
+        codeEntity.title = title
+        codeEntity.scannedDate = Date()
+        codeEntity.type = "barcode"
+        codeEntity.code = code
+        
         if let scannedCode {
-            codeEntity.id = UUID()
-            codeEntity.title = title
-            codeEntity.scannedDate = Date()
-            codeEntity.type = "barcode"
             codeEntity.brand = scannedCode.brands
             codeEntity.title = scannedCode.productName
             codeEntity.nutriScore = scannedCode.nutriscoreGrade
-        } else {
-            codeEntity.id = UUID()
-            codeEntity.title = title
-            codeEntity.scannedDate = Date()
-            codeEntity.type = "barcode"
         }
         
         try context.save()
@@ -45,6 +42,21 @@ extension ScannedCodeEntity {
         if let first = items.first, let context = first.managedObjectContext {
             offsets.map { items[$0] }.forEach(context.delete)
             try context.saveContext()
+        }
+    }
+    
+    static func isCodeAlreadySaved(code: String, type: CodeType, context: NSManagedObjectContext) throws -> Bool {
+        let request: NSFetchRequest<ScannedCodeEntity> = ScannedCodeEntity.fetchRequest()
+        request.predicate = NSPredicate(format: "code == %@ AND type == %@", code, type.rawValue)
+        do {
+            let scannedCode = try context.fetch(request).first
+            if scannedCode != nil {
+                return true
+            } else {
+                return false
+            }
+        } catch {
+            throw URLError(.networkConnectionLost) // поменять
         }
     }
 }
