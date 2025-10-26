@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import CoreData
 
 class EditCodeNameViewModel: ObservableObject {
     @Published var title: String = ""
@@ -18,12 +19,34 @@ class EditCodeNameViewModel: ObservableObject {
     let scannedCode: String
     let codeType: CodeType?
     var scannedCodeData: ScannedCode?
+    let context = PersistenceController.shared.container.viewContext
     
     init(scannedCode: String, codeType: CodeType?) {
         self.scannedCode = scannedCode
         self.codeType = codeType
         processCodeType(codeType: codeType)
         addSubscribers()
+    }
+    
+    func saveScannedCode() {
+        guard let codeType else {
+            print("Произошла ошибка при сохранении кода") // заменить
+            return
+        }
+        switch codeType {
+        case .qr:
+            do {
+                try ScannedCodeEntity.saveQrCode(link: scannedCode, title: title, context: context)
+            } catch {
+                print("Произошла ошибка при сохранении кода \(error)") // заменить
+            }
+        case .barcode:
+            do {
+                try ScannedCodeEntity.saveBarcode(scannedCodeData, title: title, context: context)
+            } catch {
+                print("Произошла ошибка при сохранении кода \(error)") // заменить
+            }
+        }
     }
     
     private func processCodeType(codeType: CodeType?) {

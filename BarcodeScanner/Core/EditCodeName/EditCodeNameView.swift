@@ -39,7 +39,7 @@ struct EditCodeNameView: View {
                     }
                 
                 Button {
-                    saveScannedCode(codeType: vm.codeType)
+                    saveScannedCode()
                 } label: {
                     Text("Готово!")
                         .foregroundColor(.black)
@@ -57,26 +57,8 @@ struct EditCodeNameView: View {
         }
     }
     
-    private func saveScannedCode(codeType: CodeType?) {
-        guard let codeType else {
-            print("Произошла ошибка при сохранении кода") // заменить
-            return
-        }
-        switch codeType {
-        case .qr:
-            do {
-                try ScannedCodeEntity.saveQrCode(link: vm.scannedCode, title: vm.title, context: context)
-            } catch {
-                print("Произошла ошибка при сохранении кода \(error)") // заменить
-            }
-        case .barcode:
-            do {
-                try ScannedCodeEntity.saveBarcode(vm.scannedCodeData, title: vm.title, context: context)
-            } catch {
-                print("Произошла ошибка при сохранении кода \(error)") // заменить
-            }
-        }
-        
+    private func saveScannedCode() {
+        vm.saveScannedCode()
         dismiss()
     }
 }
