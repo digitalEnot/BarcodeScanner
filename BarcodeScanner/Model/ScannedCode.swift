@@ -15,15 +15,18 @@ struct ScannedCode: Decodable {
     let id = UUID()
     let productName: String?
     let brands: String?
-    let ingredientsText: String?
+    let ingredients: [Ingredients]?
     let nutriscoreGrade: String?
     
     enum CodingKeys: String, CodingKey {
         case productName = "product_name"
-        case brands
-        case ingredientsText = "ingredients_text"
+        case brands, ingredients
         case nutriscoreGrade = "nutriscore_grade"
     }
+}
+
+struct Ingredients: Decodable {
+    let text: String?
 }
 
 enum CodeType: String {

@@ -7,6 +7,7 @@
         <attribute name="ingredients" optional="YES" attributeType="String"/>
         <attribute name="link" optional="YES" attributeType="String"/>
         <attribute name="nutriScore" optional="YES" attributeType="String"/>
+        <attribute name="productName" optional="YES" attributeType="String"/>
         <attribute name="scannedDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <attribute name="type" optional="YES" attributeType="String"/>

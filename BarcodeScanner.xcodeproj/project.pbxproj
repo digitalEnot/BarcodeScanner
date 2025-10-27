@@ -25,6 +25,7 @@
 		73BCB93F2EA80FDA004B6A1A /* ScannedCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73BCB93E2EA80FDA004B6A1A /* ScannedCode.swift */; };
 		73BCB9422EA813D9004B6A1A /* EditCodeNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73BCB9412EA813D9004B6A1A /* EditCodeNameView.swift */; };
 		73BCB9442EA813E0004B6A1A /* EditCodeNameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73BCB9432EA813E0004B6A1A /* EditCodeNameViewModel.swift */; };
+		73D956772EAEB600002D0A04 /* ScannedCodeDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D956762EAEB600002D0A04 /* ScannedCodeDetailsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 		73BCB93E2EA80FDA004B6A1A /* ScannedCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedCode.swift; sourceTree = "<group>"; };
 		73BCB9412EA813D9004B6A1A /* EditCodeNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCodeNameView.swift; sourceTree = "<group>"; };
 		73BCB9432EA813E0004B6A1A /* EditCodeNameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCodeNameViewModel.swift; sourceTree = "<group>"; };
+		73D956762EAEB600002D0A04 /* ScannedCodeDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedCodeDetailsView.swift; sourceTree = "<group>"; };
 		73E7589D2EA24EB9007DFFB9 /* BarcodeScanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BarcodeScanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -95,6 +97,7 @@
 			children = (
 				73283D202EA8F86D00A6322F /* Components */,
 				73ABFC9B2EA53D7E007645C8 /* ScannedCodesList */,
+				73D956752EAEB5DC002D0A04 /* ScannedCodeDetails */,
 				73ABFC9E2EA54B5E007645C8 /* Scanner */,
 				73BCB9332EA6B1CB004B6A1A /* Camera */,
 				73BCB9402EA813BE004B6A1A /* EditCodeName */,
@@ -171,6 +174,14 @@
 				73BCB9432EA813E0004B6A1A /* EditCodeNameViewModel.swift */,
 			);
 			path = EditCodeName;
+			sourceTree = "<group>";
+		};
+		73D956752EAEB5DC002D0A04 /* ScannedCodeDetails */ = {
+			isa = PBXGroup;
+			children = (
+				73D956762EAEB600002D0A04 /* ScannedCodeDetailsView.swift */,
+			);
+			path = ScannedCodeDetails;
 			sourceTree = "<group>";
 		};
 		73E758942EA24EB9007DFFB9 = {
@@ -268,6 +279,7 @@
 				73ABFC6E2EA51A5A007645C8 /* ScannedCodesListView.swift in Sources */,
 				73283D222EA8F88900A6322F /* TextFieldStyle+.swift in Sources */,
 				73BCB93A2EA80CEE004B6A1A /* NetworkManager.swift in Sources */,
+				73D956772EAEB600002D0A04 /* ScannedCodeDetailsView.swift in Sources */,
 				73ABFC732EA51D9A007645C8 /* ScannerView.swift in Sources */,
 				73ABFC712EA51A71007645C8 /* ScannedCode+helper.swift in Sources */,
 				73ABFC6F2EA51A5A007645C8 /* Persistence.swift in Sources */,

@@ -25,7 +25,6 @@ class ScannedCodeDataService {
             .decode(type: ScannedCodeItem.self, decoder: JSONDecoder())
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: handleCompletion, receiveValue: { [weak self] (codeData) in
-                print(codeData)
                 self?.codeData = codeData.product
                 self?.codeSubscription?.cancel()
             })
