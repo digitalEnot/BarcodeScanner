@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		730CBDEA2EAAA08500B1E235 /* ScannedCodesRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730CBDE92EAAA08500B1E235 /* ScannedCodesRow.swift */; };
 		73283D222EA8F88900A6322F /* TextFieldStyle+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73283D212EA8F88900A6322F /* TextFieldStyle+.swift */; };
+		7350BF8C2EB0D20F004397ED /* TagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7350BF8B2EB0D20F004397ED /* TagsView.swift */; };
 		73ABFC6B2EA51A5A007645C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 73ABFC642EA51A5A007645C8 /* Assets.xcassets */; };
 		73ABFC6C2EA51A5A007645C8 /* BarcodeScanner.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 73ABFC652EA51A5A007645C8 /* BarcodeScanner.xcdatamodeld */; };
 		73ABFC6D2EA51A5A007645C8 /* BarcodeScannerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73ABFC662EA51A5A007645C8 /* BarcodeScannerApp.swift */; };
@@ -31,6 +32,7 @@
 /* Begin PBXFileReference section */
 		730CBDE92EAAA08500B1E235 /* ScannedCodesRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedCodesRow.swift; sourceTree = "<group>"; };
 		73283D212EA8F88900A6322F /* TextFieldStyle+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextFieldStyle+.swift"; sourceTree = "<group>"; };
+		7350BF8B2EB0D20F004397ED /* TagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsView.swift; sourceTree = "<group>"; };
 		73ABFC642EA51A5A007645C8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		73ABFC662EA51A5A007645C8 /* BarcodeScannerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeScannerApp.swift; sourceTree = "<group>"; };
 		73ABFC672EA51A5A007645C8 /* ScannedCodesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedCodesListView.swift; sourceTree = "<group>"; };
@@ -66,6 +68,7 @@
 			isa = PBXGroup;
 			children = (
 				73283D212EA8F88900A6322F /* TextFieldStyle+.swift */,
+				7350BF8B2EB0D20F004397ED /* TagsView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -285,6 +288,7 @@
 				73ABFC6F2EA51A5A007645C8 /* Persistence.swift in Sources */,
 				73BCB9372EA6B29E004B6A1A /* CameraVC.swift in Sources */,
 				73BCB93D2EA80EC5004B6A1A /* ScannedCodeDataService.swift in Sources */,
+				7350BF8C2EB0D20F004397ED /* TagsView.swift in Sources */,
 				73ABFCA02EA54B72007645C8 /* ScannerViewModel.swift in Sources */,
 				73BCB93F2EA80FDA004B6A1A /* ScannedCode.swift in Sources */,
 				73BCB9422EA813D9004B6A1A /* EditCodeNameView.swift in Sources */,

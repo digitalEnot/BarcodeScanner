@@ -31,11 +31,10 @@ extension ScannedCodeEntity {
         
         if let scannedCode {
             codeEntity.brand = scannedCode.brands
-            codeEntity.title = scannedCode.productName
             codeEntity.nutriScore = scannedCode.nutriscoreGrade
             codeEntity.productName = scannedCode.productName
             if let ingredients = scannedCode.ingredients {
-                codeEntity.ingredients = ingredients.compactMap {$0.text ?? nil}.joined(separator: "----")
+                codeEntity.ingredients = ingredients.compactMap {$0.text ?? nil}.joined(separator: ",")
             }
         }
         

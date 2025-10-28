@@ -6,18 +6,38 @@
 //
 
 import SwiftUI
+import UniformTypeIdentifiers
 
 struct ScannedCodeDetailsView: View {
     
     @State var height: CGFloat = 0
+    @State var offsetOfAlert: CGFloat = 100
+    @State var alertIsOnScreen = false
     let scannedCode: ScannedCodeEntity
     
     var body: some View {
         NavigationStack {
-            VStack(spacing: 0) {
+            VStack(spacing: 10) {
                 switch type {
                 case .qr:
-                    Text("just qr")
+                    HStack {
+                        HStack {
+                            linkForQr
+                            Spacer()
+                            copyButton
+                                .padding(.horizontal)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 45)
+                        .background(Color.gray.opacity(0.1))
+                        .cornerRadius(8)
+                        arrowButton
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical)
+                    Spacer()
+                    showSuccess
+                    scannedDate
                 case .barcode:
                     scoreMark
                     productName
@@ -30,6 +50,8 @@ struct ScannedCodeDetailsView: View {
             .padding(.horizontal)
             .frame(maxHeight: .infinity)
         }
+        .navigationTitle(scannedCode.title ?? "")
+        .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             withAnimation(.linear(duration: 0.5)) {
                 height = 120
@@ -49,20 +71,32 @@ struct ScannedCodeDetailsView: View {
     }
     
     private var scoreMark: some View {
-        Text(scannedCode.nutriScore ?? "")
+        Text(nutriScoreText)
             .bold()
             .font(.system(size: 25))
             .background {
                 VStack {
                     Spacer(minLength: 0)
                     RoundedRectangle(cornerRadius: 35)
-                        .fill(Color(scannedCode.nutriScore ?? ""))
+                        .fill(Color(nutriScoreText))
                         .frame(width: 80, height: height)
                 }
                 .frame(height: 120)
             }
             .safeAreaPadding()
             .padding(.vertical, 80)
+    }
+    
+    private var nutriScoreText: String {
+        if let score = scannedCode.nutriScore {
+            if score == "unknown" {
+                return "?"
+            } else {
+                return score
+            }
+        } else {
+            return "?"
+        }
     }
     
     private var productName: some View {
@@ -77,11 +111,10 @@ struct ScannedCodeDetailsView: View {
             .font(.subheadline)
             .foregroundStyle(Color.secondary)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.vertical, 10)
     }
     
     private var ingredients: some View {
-        Text(scannedCode.ingredients ?? "")
+        TagsView(tags: (scannedCode.ingredients ?? "").components(separatedBy: ","))
     }
     
     private var scannedDate: some View {
@@ -89,5 +122,64 @@ struct ScannedCodeDetailsView: View {
             .font(.system(size: 12))
             .foregroundStyle(Color.secondary)
             .frame(maxWidth: .infinity, alignment: .center)
+    }
+    
+    private var linkForQr: some View {
+        Text(scannedCode.link ?? "")
+            .font(.body)
+            .padding()
+            .textSelection(.enabled)
+    }
+    
+    private var arrowButton: some View {
+        Button {
+            if let url = URL(string: scannedCode.link ?? "") {
+                UIApplication.shared.open(url)
+            }
+        } label: {
+            Image(systemName: "arrow.right.circle.fill")
+                .foregroundStyle(Color.blue)
+                .font(.system(size: 35))
+        }
+
+    }
+    
+    private var copyButton: some View {
+        Button {
+            if alertIsOnScreen { return }
+            alertIsOnScreen = true
+            UIPasteboard.general.setValue(scannedCode.link ?? "", forPasteboardType: UTType.plainText.identifier)
+            withAnimation(.easeOut(duration: 0.25)) {
+                offsetOfAlert = -25
+            }
+            let impactMed = UIImpactFeedbackGenerator(style: .medium)
+            impactMed.impactOccurred()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                withAnimation(.easeIn(duration: 0.25)) {
+                    offsetOfAlert = 100
+                    alertIsOnScreen = false
+                }
+            }
+        } label: {
+            Image(systemName: "document.on.document")
+                .foregroundStyle(Color.gray)
+        }
+    }
+    
+    private var showSuccess: some View {
+        HStack(spacing: 10) {
+            Text("Скопировано!")
+                .font(.system(size: 17))
+            Image(systemName: "checkmark.circle")
+                .foregroundStyle(Color.green)
+                .font(.system(size: 20))
+        }
+            .padding()
+            .background {
+                Capsule()
+                    .fill(.white)
+                    .shadow(color: .black.opacity(0.2), radius: 5)
+            }
+            .offset(y: offsetOfAlert)
     }
 }
