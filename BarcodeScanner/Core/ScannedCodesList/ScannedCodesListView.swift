@@ -19,13 +19,12 @@ struct ScannedCodesListView: View {
 
     var body: some View {
         NavigationStack {
-            List {
-                ForEach(items) { code in
-                    NavigationLink(destination: ScannedCodeDetailsView(scannedCode: code)) {
-                        ScannedCodesRow(scannedCode: code)
-                    }
+            ZStack {
+                if items.isEmpty {
+                    contentUnavailable
+                } else {
+                    listOfCodes
                 }
-                .onDelete(perform: deleteCodes)
             }
             .navigationTitle("ScannedCodes")
             .toolbar {
@@ -38,6 +37,25 @@ struct ScannedCodesListView: View {
             .sheet(isPresented: $showScannerView) {
                 ScannerView()
             }
+        }
+    }
+    
+    private var contentUnavailable: some View {
+        ContentUnavailableView(
+            "История сканов пуста",
+            systemImage: "bookmark.slash",
+            description: Text("Отканируйте свой первый код нажав на кнопку \(Image(systemName: "barcode.viewfinder"))")
+        )
+    }
+    
+    private var listOfCodes: some View {
+        List {
+            ForEach(items) { code in
+                NavigationLink(destination: ScannedCodeDetailsView(scannedCode: code)) {
+                    ScannedCodesRow(scannedCode: code)
+                }
+            }
+            .onDelete(perform: deleteCodes)
         }
     }
     

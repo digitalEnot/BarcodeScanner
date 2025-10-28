@@ -39,16 +39,27 @@ struct ScannedCodeDetailsView: View {
                     showSuccess
                     scannedDate
                 case .barcode:
-                    scoreMark
-                    productName
-                    brand
-                    ingredients
-                    Spacer()
-                    scannedDate
+                    if scannedCode.productName != nil {
+                        scoreMark
+                        productName
+                        brand
+                        ingredients
+                        Spacer()
+                        scannedDate
+                    } else {
+                      contentUnavailable
+                    }
                 }
             }
             .padding(.horizontal)
             .frame(maxHeight: .infinity)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    ShareLink(item: shareCode()) {
+                        Image(systemName: "square.and.arrow.up")
+                    }
+                }
+            }
         }
         .navigationTitle(scannedCode.title ?? "")
         .navigationBarTitleDisplayMode(.inline)
@@ -57,6 +68,29 @@ struct ScannedCodeDetailsView: View {
                 height = 120
             }
         }
+    }
+    
+    private func shareCode() -> String {
+        var text = ""
+        if type == .barcode {
+            text = "Продукт: \(scannedCode.productName ?? "Неизвестный")\n"
+            if let brand = scannedCode.brand {
+                text += "Бренд: \(brand)\n"
+            }
+            text += "Штрих-код: \(scannedCode.code ?? "-")"
+        } else {
+            text = "QR-код: \(scannedCode.link ?? "-")"
+        }
+        
+        return text
+    }
+    
+    private var contentUnavailable: some View {
+        ContentUnavailableView(
+            "Нет информации",
+            systemImage: "text.page.slash.fill",
+            description: Text("В базе open food facts не было найдено информации по данному коду")
+        )
     }
     
     private var formatter: DateFormatter {
