@@ -11,7 +11,7 @@ import UniformTypeIdentifiers
 struct ScannedCodeDetailsView: View {
     
     @State var height: CGFloat = 0
-    @State var offsetOfAlert: CGFloat = 100
+    @State var offsetOfAlert: CGFloat = 130
     @State var alertIsOnScreen = false
     let scannedCode: ScannedCodeEntity
     
@@ -190,7 +190,7 @@ struct ScannedCodeDetailsView: View {
             impactMed.impactOccurred()
             DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                 withAnimation(.easeIn(duration: 0.25)) {
-                    offsetOfAlert = 100
+                    offsetOfAlert = 130
                     alertIsOnScreen = false
                 }
             }
@@ -204,6 +204,7 @@ struct ScannedCodeDetailsView: View {
         HStack(spacing: 10) {
             Text("Скопировано!")
                 .font(.system(size: 17))
+                .foregroundStyle(.black)
             Image(systemName: "checkmark.circle")
                 .foregroundStyle(Color.green)
                 .font(.system(size: 20))

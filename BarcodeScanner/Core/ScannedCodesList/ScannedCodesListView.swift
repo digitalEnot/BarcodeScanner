@@ -7,6 +7,7 @@
 
 import SwiftUI
 import CoreData
+import AVFoundation
 
 struct ScannedCodesListView: View {
     @Environment(\.managedObjectContext) private var viewContext
@@ -38,6 +39,26 @@ struct ScannedCodesListView: View {
                 ScannerView()
             }
         }
+        .alert(vm.error?.title ?? "", isPresented: $vm.presentError, presenting: vm.error, actions: errorActions, message: errorMessage)
+    }
+    
+    @ViewBuilder
+    private func errorActions(error: ScannedCodesListError) -> some View {
+        switch error {
+        case .cameraDenied:
+            Button("Ок") {
+                vm.presentError = false
+            }
+            Button("Настройки") {
+                guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
+                UIApplication.shared.open(url)
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private func errorMessage(error: ScannedCodesListError) -> some View {
+        Text(error.message)
     }
     
     private var contentUnavailable: some View {
@@ -70,7 +91,20 @@ struct ScannedCodesListView: View {
     }
     
     private func openScanner() {
-        showScannerView = true
+        switch AVCaptureDevice.authorizationStatus(for: .video) {
+            case .authorized: showScannerView = true
+            case .notDetermined:
+                AVCaptureDevice.requestAccess(for: .video) { granted in
+                    DispatchQueue.main.async {
+                        if granted {
+                            showScannerView = true
+                        } else {
+                            vm.error = .cameraDenied
+                        }
+                    }
+                }
+            default: vm.error = .cameraDenied
+        }
     }
 }
 

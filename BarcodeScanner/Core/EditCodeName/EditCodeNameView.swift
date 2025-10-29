@@ -26,7 +26,7 @@ struct EditCodeNameView: View {
                 Text("Введите название отсканированного кода:")
                     .font(.headline)
                 
-                TextField("", text: $vm.title)
+                TextField("Введите название для кода", text: $vm.title)
                     .textFieldStyle(UnderlinedTextFieldStyle(borderColor: isTextFieldFocused ? .blue : .gray))
                     .disableAutocorrection(true)
                     .font(.system(size: fontSize))
@@ -34,24 +34,25 @@ struct EditCodeNameView: View {
                     .focused($isTextFieldFocused)
                     .onChange(of: vm.title) { _, newValue in
                         withAnimation {
-                            fontSize = newValue.count > 15 ? 16 : 24
+                            fontSize = vm.title.count == 0 ? 13 : vm.title.count > 15 ? 16 : 24
                         }
                     }
                 
                 Button {
                     saveScannedCode()
                 } label: {
-                    Text("Готово!")
-                        .foregroundColor(.black)
+                    Text("Сохранить")
+                        .foregroundColor(vm.title.isEmpty ? .secondary : Color.black)
                         .frame(width: 200)
                         .padding()
-                        .background(Color.blue)
+                        .background(vm.title.isEmpty ? Color.gray.opacity(0.5) : Color.blue)
                         .cornerRadius(10)
                 }
+                .disabled(vm.title.isEmpty)
                 
                 Spacer()
             }
-            .onAppear { fontSize = vm.title.count > 15 ? 16 : 24 }
+            .onAppear { fontSize = vm.title.count == 0 ? 13 : vm.title.count > 15 ? 16 : 24 }
         } else {
             ProgressView()
         }
