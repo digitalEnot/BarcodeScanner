@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		730CBDEA2EAAA08500B1E235 /* ScannedCodesRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730CBDE92EAAA08500B1E235 /* ScannedCodesRow.swift */; };
 		73283D222EA8F88900A6322F /* TextFieldStyle+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73283D212EA8F88900A6322F /* TextFieldStyle+.swift */; };
+		7328E0112EB295BD002DA952 /* EditCodeNameError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7328E0102EB295BD002DA952 /* EditCodeNameError.swift */; };
 		7350BF8C2EB0D20F004397ED /* TagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7350BF8B2EB0D20F004397ED /* TagsView.swift */; };
 		73ABFC6B2EA51A5A007645C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 73ABFC642EA51A5A007645C8 /* Assets.xcassets */; };
 		73ABFC6C2EA51A5A007645C8 /* BarcodeScanner.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 73ABFC652EA51A5A007645C8 /* BarcodeScanner.xcdatamodeld */; };
@@ -27,11 +28,13 @@
 		73BCB9422EA813D9004B6A1A /* EditCodeNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73BCB9412EA813D9004B6A1A /* EditCodeNameView.swift */; };
 		73BCB9442EA813E0004B6A1A /* EditCodeNameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73BCB9432EA813E0004B6A1A /* EditCodeNameViewModel.swift */; };
 		73D956772EAEB600002D0A04 /* ScannedCodeDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73D956762EAEB600002D0A04 /* ScannedCodeDetailsView.swift */; };
+		73F647CE2EB26D4D000F0F99 /* ScannedCodesListError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73F647CD2EB26D4D000F0F99 /* ScannedCodesListError.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		730CBDE92EAAA08500B1E235 /* ScannedCodesRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedCodesRow.swift; sourceTree = "<group>"; };
 		73283D212EA8F88900A6322F /* TextFieldStyle+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextFieldStyle+.swift"; sourceTree = "<group>"; };
+		7328E0102EB295BD002DA952 /* EditCodeNameError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCodeNameError.swift; sourceTree = "<group>"; };
 		7350BF8B2EB0D20F004397ED /* TagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsView.swift; sourceTree = "<group>"; };
 		73ABFC642EA51A5A007645C8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		73ABFC662EA51A5A007645C8 /* BarcodeScannerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarcodeScannerApp.swift; sourceTree = "<group>"; };
@@ -51,6 +54,7 @@
 		73BCB9432EA813E0004B6A1A /* EditCodeNameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCodeNameViewModel.swift; sourceTree = "<group>"; };
 		73D956762EAEB600002D0A04 /* ScannedCodeDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedCodeDetailsView.swift; sourceTree = "<group>"; };
 		73E7589D2EA24EB9007DFFB9 /* BarcodeScanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BarcodeScanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		73F647CD2EB26D4D000F0F99 /* ScannedCodesListError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedCodesListError.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,10 +104,10 @@
 			children = (
 				73283D202EA8F86D00A6322F /* Components */,
 				73ABFC9B2EA53D7E007645C8 /* ScannedCodesList */,
-				73D956752EAEB5DC002D0A04 /* ScannedCodeDetails */,
 				73ABFC9E2EA54B5E007645C8 /* Scanner */,
 				73BCB9332EA6B1CB004B6A1A /* Camera */,
 				73BCB9402EA813BE004B6A1A /* EditCodeName */,
+				73D956752EAEB5DC002D0A04 /* ScannedCodeDetails */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -129,9 +133,10 @@
 		73ABFC9B2EA53D7E007645C8 /* ScannedCodesList */ = {
 			isa = PBXGroup;
 			children = (
+				73F647CC2EB26D1F000F0F99 /* Rows */,
+				73F647CD2EB26D4D000F0F99 /* ScannedCodesListError.swift */,
 				73ABFC672EA51A5A007645C8 /* ScannedCodesListView.swift */,
 				73ABFC9C2EA53E57007645C8 /* ScannedCodesListViewModel.swift */,
-				730CBDE92EAAA08500B1E235 /* ScannedCodesRow.swift */,
 			);
 			path = ScannedCodesList;
 			sourceTree = "<group>";
@@ -173,6 +178,7 @@
 		73BCB9402EA813BE004B6A1A /* EditCodeName */ = {
 			isa = PBXGroup;
 			children = (
+				7328E0102EB295BD002DA952 /* EditCodeNameError.swift */,
 				73BCB9412EA813D9004B6A1A /* EditCodeNameView.swift */,
 				73BCB9432EA813E0004B6A1A /* EditCodeNameViewModel.swift */,
 			);
@@ -201,6 +207,14 @@
 				73E7589D2EA24EB9007DFFB9 /* BarcodeScanner.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		73F647CC2EB26D1F000F0F99 /* Rows */ = {
+			isa = PBXGroup;
+			children = (
+				730CBDE92EAAA08500B1E235 /* ScannedCodesRow.swift */,
+			);
+			path = Rows;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -281,6 +295,8 @@
 				73ABFC6D2EA51A5A007645C8 /* BarcodeScannerApp.swift in Sources */,
 				73ABFC6E2EA51A5A007645C8 /* ScannedCodesListView.swift in Sources */,
 				73283D222EA8F88900A6322F /* TextFieldStyle+.swift in Sources */,
+				73F647CE2EB26D4D000F0F99 /* ScannedCodesListError.swift in Sources */,
+				7328E0112EB295BD002DA952 /* EditCodeNameError.swift in Sources */,
 				73BCB93A2EA80CEE004B6A1A /* NetworkManager.swift in Sources */,
 				73D956772EAEB600002D0A04 /* ScannedCodeDetailsView.swift in Sources */,
 				73ABFC732EA51D9A007645C8 /* ScannerView.swift in Sources */,

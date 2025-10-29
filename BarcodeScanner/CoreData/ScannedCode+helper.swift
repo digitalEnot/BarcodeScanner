@@ -51,15 +51,11 @@ extension ScannedCodeEntity {
     static func isCodeAlreadySaved(code: String, type: CodeType, context: NSManagedObjectContext) throws -> Bool {
         let request: NSFetchRequest<ScannedCodeEntity> = ScannedCodeEntity.fetchRequest()
         request.predicate = NSPredicate(format: "code == %@ AND type == %@", code, type.rawValue)
-        do {
-            let scannedCode = try context.fetch(request).first
-            if scannedCode != nil {
-                return true
-            } else {
-                return false
-            }
-        } catch {
-            throw URLError(.networkConnectionLost) // поменять
+        let scannedCode = try context.fetch(request).first
+        if scannedCode != nil {
+            return true
+        } else {
+            return false
         }
     }
 }

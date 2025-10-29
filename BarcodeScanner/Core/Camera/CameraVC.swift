@@ -10,7 +10,7 @@ import AVFoundation
 
 class CameraVC: UIViewController {
     
-    private let sessionQueue = DispatchQueue(label: "scanner.session.queue") // зачем?
+    private let sessionQueue = DispatchQueue(label: "scanner.session.queue")
     let captureSession = AVCaptureSession()
     var previewLayer: AVCaptureVideoPreviewLayer?
     weak var delegate: CameraVCDelegate?
@@ -51,9 +51,7 @@ class CameraVC: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
         guard let previewLayer = previewLayer else {
-            self.delegate?.didEndWithError(URLError(.unknown)) // поменять тип ошибки
             return
         }
         previewLayer.frame = view.layer.bounds
@@ -61,12 +59,12 @@ class CameraVC: UIViewController {
     
     func setFlashlightTo(_ isOn: Bool) {
         guard let device = AVCaptureDevice.default(for: .video) else {
-            self.delegate?.didEndWithError(URLError(.unknown)) // поменять тип ошибки
+            self.delegate?.didEndWithError(.cameraProblems)
             return
         }
         
-        guard device.hasTorch else { // TODO: все обращения к делегату должны быть на main потоке!!!
-            self.delegate?.didEndWithError(URLError(.unknown)) // поменять тип ошибки
+        guard device.hasTorch else {
+            self.delegate?.didEndWithError(.cantToggleFlashlight)
             return
         }
         
@@ -79,7 +77,7 @@ class CameraVC: UIViewController {
             }
             device.unlockForConfiguration()
         } catch {
-            self.delegate?.didEndWithError(URLError(.unknown)) // поменять тип ошибки
+            self.delegate?.didEndWithError(.cantToggleFlashlight)
         }
     }
     
@@ -89,7 +87,7 @@ class CameraVC: UIViewController {
             
             guard let videoCaptureDevice = AVCaptureDevice.default(for: .video) else {
                 DispatchQueue.main.async {
-                    self.delegate?.didEndWithError(URLError(.unknown)) // поменять тип ошибки
+                    self.delegate?.didEndWithError(.cameraProblems)
                 }
                 return
             }
@@ -100,7 +98,7 @@ class CameraVC: UIViewController {
                 videoInput = try AVCaptureDeviceInput(device: videoCaptureDevice)
             } catch {
                 DispatchQueue.main.async {
-                    self.delegate?.didEndWithError(URLError(.unknown)) // поменять тип ошибки
+                    self.delegate?.didEndWithError(.cameraProblems)
                 }
                 return
             }
@@ -109,7 +107,7 @@ class CameraVC: UIViewController {
                 captureSession.addInput(videoInput)
             } else {
                 DispatchQueue.main.async {
-                    self.delegate?.didEndWithError(URLError(.unknown)) // поменять тип ошибки
+                    self.delegate?.didEndWithError(.cameraProblems)
                 }
                 return
             }
@@ -122,7 +120,7 @@ class CameraVC: UIViewController {
                 metaDataOutput.metadataObjectTypes = [.ean8, .ean13, .qr]
             } else {
                 DispatchQueue.main.async {
-                    self.delegate?.didEndWithError(URLError(.unknown)) // поменять тип ошибки
+                    self.delegate?.didEndWithError(.cameraProblems)
                 }
                 return
             }
@@ -155,12 +153,10 @@ extension CameraVC: AVCaptureMetadataOutputObjectsDelegate {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
                     self?.delegate?.didFindCode(code, type: type)
                 }
-            } else {
-                self.delegate?.didEndWithError(URLError(.unknown)) // поменять тип ошибки
             }
             captureSession.stopRunning()
         } else {
-            delegate?.didGetBounds(nil) // TODO: вопрос надо ли это??? (+ надо добавить сообщение при получении разрешения на пользование камеры)
+            delegate?.didGetBounds(nil)
         }
     }
 }

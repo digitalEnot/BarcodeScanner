@@ -15,19 +15,16 @@ struct PersistenceController {
     init() {
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
-                print("Error with loading PersistentStores \(error)")
+                fatalError("Error with loading PersistentStores \(error)")
             }
         })
     }
 }
 
 extension NSManagedObjectContext {
-    
     func saveContext() throws {
         if self.hasChanges {
-            do {
-                try self.save()
-            }
+            try self.save()
         }
     }
 }

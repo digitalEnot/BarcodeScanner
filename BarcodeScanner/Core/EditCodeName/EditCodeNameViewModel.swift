@@ -11,59 +11,55 @@ import CoreData
 
 class EditCodeNameViewModel: ObservableObject {
     @Published var title: String = ""
-    @Published var error: Error?
+    @Published var error: EditCodeNameError?
     @Published var showProgressView = true
+    @Published var presentError = false
     
     private let scannedCodeDataService = ScannedCodeDataService()
     private var cancellables = Set<AnyCancellable>()
     let scannedCode: String
-    let codeType: CodeType?
+    let codeType: CodeType
     var scannedCodeData: ScannedCode?
     let context = PersistenceController.shared.container.viewContext
     
-    init(scannedCode: String, codeType: CodeType?) {
+    init(scannedCode: String, codeType: CodeType) {
         self.scannedCode = scannedCode
         self.codeType = codeType
+        checkIfCodeInDataBase()
         processCodeType(codeType: codeType)
         addSubscribers()
     }
     
     func saveScannedCode() {
-        guard let codeType else {
-            print("Произошла ошибка при сохранении кода") // заменить
-            return
-        }
         switch codeType {
         case .qr:
             do {
                 try ScannedCodeEntity.saveQrCode(link: scannedCode, title: title, context: context)
             } catch {
-                print("Произошла ошибка при сохранении кода \(error)") // заменить
+                self.error = .cantSaveCode
             }
         case .barcode:
             do {
                 try ScannedCodeEntity.saveBarcode(scannedCodeData, code: scannedCode, title: title, context: context)
             } catch {
-                print("Произошла ошибка при сохранении кода \(error)") // заменить
+                self.error = .cantSaveCode
             }
         }
     }
     
     private func checkIfCodeInDataBase() {
-        guard let codeType else { return }
         do {
             let result = try ScannedCodeEntity.isCodeAlreadySaved(code: scannedCode, type: codeType, context: context)
             if result {
-                error = URLError(.unknown) // замнить на код уже есть в базе данных
-                print("уже есть") // убрать
+                error = .codeAlreadySaved
             }
         } catch {
-            self.error = error
+            self.error = .cantRetrieveCode
         }
     }
     
     private func processCodeType(codeType: CodeType?) {
-        guard let codeType else { return } // добавить ошибку
+        guard let codeType else { error = .codeTypeIsNil; return }
         switch codeType {
         case .qr:
             showProgressView = false
@@ -77,18 +73,22 @@ class EditCodeNameViewModel: ObservableObject {
             .dropFirst()
             .sink { [weak self] returnedData in
                 guard let self else { return }
+                guard let returnedData else {
+                    showProgressView = false
+                    error = .noInfoForCode
+                    return
+                }
                 scannedCodeData = returnedData
-                title = returnedData?.productName ?? ""
+                title = returnedData.productName ?? ""
                 showProgressView = false
-                checkIfCodeInDataBase()
             }
             .store(in: &cancellables)
         
-        scannedCodeDataService.$error
+        $error
             .dropFirst()
             .sink { [weak self] error in
-                guard let self else { return }
-                self.error = URLError(.unknown) // заменить
+                guard let _ = error, let self else { return }
+                presentError = true
             }
             .store(in: &cancellables)
     }

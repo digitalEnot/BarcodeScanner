@@ -123,11 +123,7 @@ struct ScannedCodeDetailsView: View {
     
     private var nutriScoreText: String {
         if let score = scannedCode.nutriScore {
-            if score == "unknown" {
-                return "?"
-            } else {
-                return score
-            }
+            return "abcde".contains(score) ? score : "?"
         } else {
             return "?"
         }
@@ -147,8 +143,11 @@ struct ScannedCodeDetailsView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
     }
     
+    @ViewBuilder
     private var ingredients: some View {
-        TagsView(tags: (scannedCode.ingredients ?? "").components(separatedBy: ","))
+        if let ingr = scannedCode.ingredients {
+            TagsView(tags: (ingr).components(separatedBy: ","))
+        }
     }
     
     private var scannedDate: some View {

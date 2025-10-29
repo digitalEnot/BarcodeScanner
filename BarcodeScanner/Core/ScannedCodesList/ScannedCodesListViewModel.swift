@@ -8,22 +8,6 @@
 import Foundation
 import Combine
 
-enum ScannedCodesListError {
-    case cameraDenied
-    
-    var title: String {
-        switch self {
-        case .cameraDenied: "Нет доступа к камере"
-        }
-    }
-    
-    var message: String {
-        switch self {
-        case .cameraDenied: "Разрешите доступ к камере для сканирования кодов"
-        }
-    }
-}
-
 class ScannedCodesListViewModel: ObservableObject {
     @Published var error: ScannedCodesListError?
     @Published var presentError: Bool = false

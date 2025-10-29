@@ -42,25 +42,6 @@ struct ScannedCodesListView: View {
         .alert(vm.error?.title ?? "", isPresented: $vm.presentError, presenting: vm.error, actions: errorActions, message: errorMessage)
     }
     
-    @ViewBuilder
-    private func errorActions(error: ScannedCodesListError) -> some View {
-        switch error {
-        case .cameraDenied:
-            Button("Ок") {
-                vm.presentError = false
-            }
-            Button("Настройки") {
-                guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
-                UIApplication.shared.open(url)
-            }
-        }
-    }
-    
-    @ViewBuilder
-    private func errorMessage(error: ScannedCodesListError) -> some View {
-        Text(error.message)
-    }
-    
     private var contentUnavailable: some View {
         ContentUnavailableView(
             "История сканов пуста",
@@ -85,7 +66,7 @@ struct ScannedCodesListView: View {
             do {
                 try ScannedCodeEntity.delete(at: offsets, for: Array(items))
             } catch {
-                print("Возникла ошибка при удалении кода \(error)")
+                vm.error = .cantDeleteCode
             }
         }
     }
@@ -105,6 +86,27 @@ struct ScannedCodesListView: View {
                 }
             default: vm.error = .cameraDenied
         }
+    }
+}
+
+extension ScannedCodesListView {
+    @ViewBuilder
+    private func errorActions(error: ScannedCodesListError) -> some View {
+        Button("Ок") {
+            vm.presentError = false
+        }
+        
+        if error == .cameraDenied {
+            Button("Настройки") {
+                guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
+                UIApplication.shared.open(url)
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private func errorMessage(error: ScannedCodesListError) -> some View {
+        Text(error.message)
     }
 }
 

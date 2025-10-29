@@ -10,14 +10,14 @@ import Combine
 
 protocol CameraVCDelegate: AnyObject {
     func didFindCode(_ code: String, type: CodeType)
-    func didEndWithError(_ error: Error)
+    func didEndWithError(_ error: ScannerError)
     func didGetBounds(_ bounds: CGRect?)
     func turnOffFlash()
 }
 
 struct CameraVCRepresentable: UIViewControllerRepresentable {
     @Binding var isFlashOn: Bool
-    @Binding var error: Error?
+    @Binding var error: ScannerError?
     @Binding var scannedCode: String
     @Binding var rectOfInterest: CGRect?
     @Binding var codeType: CodeType?
@@ -55,7 +55,7 @@ struct CameraVCRepresentable: UIViewControllerRepresentable {
             delegate.path.append("EditCodeName")
         }
         
-        func didEndWithError(_ error: Error) {
+        func didEndWithError(_ error: ScannerError) {
             delegate.viewModel.shouldUpdateView = false
             self.delegate.error = error
         }

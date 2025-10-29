@@ -35,11 +35,12 @@ struct ScannerView: View {
             }
             .navigationDestination(for: String.self) { selection in
                 if selection == "EditCodeName" {
-                    EditCodeNameView(scannedCode: vm.scannedCode, dismiss: dismiss, codeType: vm.codeType)
+                    EditCodeNameLoadingView(scannedCode: vm.scannedCode, dismiss: dismiss, codeType: vm.codeType)
                 }
             }
             .ignoresSafeArea()
         }
+        .alert(vm.error?.title ?? "", isPresented: $vm.presentError, presenting: vm.error, actions: errorActions, message: errorMessage)
     }
     
     var flashlight: some View {
@@ -122,6 +123,24 @@ private struct CustomShape: Shape {
         path.addLine(to: CGPoint(x: 0, y: rect.height))
         
         return path
+    }
+}
+
+extension ScannerView {
+    @ViewBuilder
+    private func errorActions(error: ScannerError) -> some View {
+        Button("Ок") {
+            if error == .cameraProblems {
+                dismiss()
+            } else {
+                vm.presentError = false
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private func errorMessage(error: ScannerError) -> some View {
+        Text(error.message)
     }
 }
 
