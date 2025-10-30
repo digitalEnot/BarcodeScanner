@@ -17,8 +17,14 @@ class NetworkManager {
     }
     
     static func handleURLResponce(output: URLSession.DataTaskPublisher.Output, url: URL) throws -> Data {
-        guard let response = output.response as? HTTPURLResponse, response.statusCode >= 200 && response.statusCode < 300 else {
-            throw URLError(.badURL)
+        guard let response = output.response as? HTTPURLResponse else { throw URLError(.badServerResponse)}
+        
+        guard response.statusCode >= 200 && response.statusCode < 300 else {
+            if response.statusCode == 404 {
+                throw URLError(.cannotDecodeRawData)
+            } else {
+                throw URLError(.badServerResponse)
+            }
         }
         return output.data
     }

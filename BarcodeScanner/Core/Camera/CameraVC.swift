@@ -116,7 +116,7 @@ class CameraVC: UIViewController {
             
             if captureSession.canAddOutput(metaDataOutput) {
                 captureSession.addOutput(metaDataOutput)
-                metaDataOutput.setMetadataObjectsDelegate(self, queue: .main) // фикс варнинга
+                metaDataOutput.setMetadataObjectsDelegate(self, queue: .main) // TODO: фикс варнинга
                 metaDataOutput.metadataObjectTypes = [.ean8, .ean13, .qr]
             } else {
                 DispatchQueue.main.async {

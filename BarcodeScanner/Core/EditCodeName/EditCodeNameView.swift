@@ -92,6 +92,14 @@ extension EditCodeNameView {
             Button("Ок") {
                 vm.dequeue()
             }
+        } else if error == .problemWithServer || error == .noInternetConnection {
+            Button("Отмена") {
+                vm.dequeue()
+            }
+            Button("Повторить") {
+                vm.dequeue()
+                vm.processCodeType()
+            }
         } else {
             Button("Ок") {
                 vm.dequeue()

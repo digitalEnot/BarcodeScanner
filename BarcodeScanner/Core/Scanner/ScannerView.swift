@@ -11,7 +11,7 @@ struct ScannerView: View {
     
     @Environment(\.dismiss) var dismiss
     @StateObject var vm = ScannerViewModel()
-    @State private var path = NavigationPath() // не переместить ли на уровень ниже???
+    @State private var path = NavigationPath() // TODO: не переместить ли на уровень ниже???
     
     var body: some View {
         NavigationStack(path: $path) {

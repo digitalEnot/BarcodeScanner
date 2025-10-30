@@ -37,6 +37,7 @@ struct ScannedCodesListView: View {
             }
             .sheet(isPresented: $showScannerView) {
                 ScannerView()
+                    .presentationDragIndicator(.visible)
             }
         }
         .alert(vm.error?.title ?? "", isPresented: $vm.presentError, presenting: vm.error, actions: errorActions, message: errorMessage)

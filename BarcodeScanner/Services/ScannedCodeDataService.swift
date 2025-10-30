@@ -10,6 +10,7 @@ import Combine
 
 class ScannedCodeDataService {
     @Published var codeData: ScannedCode?
+    @Published var error: NetworkError?
     var codeSubscription: AnyCancellable?
     
     func getCodeData(with code: String) {
@@ -32,7 +33,16 @@ class ScannedCodeDataService {
     private func handleCompletion(completion: Subscribers.Completion<Error>) {
         switch completion {
         case .finished: break
-        case .failure: codeData = nil
+        case .failure(let error):
+            if let error = (error as? URLError) {
+                if error.code == .badServerResponse {
+                    self.error = .serverError
+                } else if error.code == .notConnectedToInternet {
+                    self.error = .noInternetConnection
+                } else if error.code == .cannotDecodeRawData {
+                    self.error = .noData
+                }
+            }
         }
     }
 }

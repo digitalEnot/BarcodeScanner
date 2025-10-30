@@ -28,23 +28,7 @@ class EditCodeNameViewModel: ObservableObject {
         self.codeType = codeType
         addSubscribers()
         checkIfCodeInDataBase()
-        processCodeType(codeType: codeType)
-    }
-    
-    private func enqueue(_ alert: EditCodeNameError) {
-        errorQueue.append(alert)
-        if errorQueue.count == 1 {
-            error = alert
-        }
-    }
-    
-    func dequeue() {
-        if !errorQueue.isEmpty {
-            errorQueue.removeFirst()
-            if !errorQueue.isEmpty {
-                error = errorQueue.removeFirst()
-            }
-        }
+        processCodeType()
     }
     
     func saveScannedCode() {
@@ -64,6 +48,31 @@ class EditCodeNameViewModel: ObservableObject {
         }
     }
     
+    func dequeue() {
+        if !errorQueue.isEmpty {
+            errorQueue.removeFirst()
+            if !errorQueue.isEmpty {
+                error = errorQueue.removeFirst()
+            }
+        }
+    }
+    
+    func processCodeType() {
+        switch codeType {
+        case .qr:
+            showProgressView = false
+        case .barcode:
+            scannedCodeDataService.getCodeData(with: scannedCode)
+        }
+    }
+    
+    private func enqueue(_ alert: EditCodeNameError) {
+        errorQueue.append(alert)
+        if errorQueue.count == 1 {
+            error = alert
+        }
+    }
+    
     private func checkIfCodeInDataBase() {
         do {
             let result = try ScannedCodeEntity.isCodeAlreadySaved(code: scannedCode, type: codeType, context: context)
@@ -75,27 +84,13 @@ class EditCodeNameViewModel: ObservableObject {
         }
     }
     
-    private func processCodeType(codeType: CodeType) {
-        switch codeType {
-        case .qr:
-            showProgressView = false
-        case .barcode:
-            scannedCodeDataService.getCodeData(with: scannedCode)
-        }
-    }
-    
     private func addSubscribers() {
         scannedCodeDataService.$codeData
             .dropFirst()
             .sink { [weak self] returnedData in
                 guard let self else { return }
-                guard let returnedData else {
-                    showProgressView = false
-                    enqueue(.noInfoForCode)
-                    return
-                }
                 scannedCodeData = returnedData
-                title = returnedData.productName ?? ""
+                title = returnedData?.productName ?? ""
                 showProgressView = false
             }
             .store(in: &cancellables)
@@ -107,6 +102,19 @@ class EditCodeNameViewModel: ObservableObject {
                 presentError = false
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) { [weak self] in
                     self?.presentError = true
+                }
+            }
+            .store(in: &cancellables)
+        
+        scannedCodeDataService.$error
+            .dropFirst()
+            .sink { [weak self] error in
+                self?.showProgressView = false
+                switch error {
+                case .noData: self?.enqueue(.noInfoForCode)
+                case .noInternetConnection: self?.enqueue(.noInternetConnection)
+                case .serverError: self?.enqueue(.problemWithServer)
+                case .none: return
                 }
             }
             .store(in: &cancellables)

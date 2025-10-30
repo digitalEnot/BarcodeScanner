@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		730CBDEA2EAAA08500B1E235 /* ScannedCodesRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 730CBDE92EAAA08500B1E235 /* ScannedCodesRow.swift */; };
+		731659442EB3B30D006EB21C /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 731659432EB3B30D006EB21C /* NetworkError.swift */; };
 		73283D222EA8F88900A6322F /* TextFieldStyle+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73283D212EA8F88900A6322F /* TextFieldStyle+.swift */; };
 		7328E0112EB295BD002DA952 /* EditCodeNameError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7328E0102EB295BD002DA952 /* EditCodeNameError.swift */; };
 		7350BF8C2EB0D20F004397ED /* TagsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7350BF8B2EB0D20F004397ED /* TagsView.swift */; };
@@ -33,6 +34,7 @@
 
 /* Begin PBXFileReference section */
 		730CBDE92EAAA08500B1E235 /* ScannedCodesRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedCodesRow.swift; sourceTree = "<group>"; };
+		731659432EB3B30D006EB21C /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		73283D212EA8F88900A6322F /* TextFieldStyle+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TextFieldStyle+.swift"; sourceTree = "<group>"; };
 		7328E0102EB295BD002DA952 /* EditCodeNameError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCodeNameError.swift; sourceTree = "<group>"; };
 		7350BF8B2EB0D20F004397ED /* TagsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsView.swift; sourceTree = "<group>"; };
@@ -170,6 +172,7 @@
 		73BCB93B2EA80E8E004B6A1A /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				731659432EB3B30D006EB21C /* NetworkError.swift */,
 				73BCB93C2EA80EC5004B6A1A /* ScannedCodeDataService.swift */,
 			);
 			path = Services;
@@ -298,6 +301,7 @@
 				73F647CE2EB26D4D000F0F99 /* ScannedCodesListError.swift in Sources */,
 				7328E0112EB295BD002DA952 /* EditCodeNameError.swift in Sources */,
 				73BCB93A2EA80CEE004B6A1A /* NetworkManager.swift in Sources */,
+				731659442EB3B30D006EB21C /* NetworkError.swift in Sources */,
 				73D956772EAEB600002D0A04 /* ScannedCodeDetailsView.swift in Sources */,
 				73ABFC732EA51D9A007645C8 /* ScannerView.swift in Sources */,
 				73ABFC712EA51A71007645C8 /* ScannedCodeEntity+helper.swift in Sources */,
