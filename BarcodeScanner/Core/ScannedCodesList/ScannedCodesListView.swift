@@ -12,7 +12,7 @@ import AVFoundation
 struct ScannedCodesListView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \ScannedCodeEntity.title_, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \ScannedCodeEntity.scannedDate_, ascending: true)],
         animation: .default)
     private var items: FetchedResults<ScannedCodeEntity>
     @State private var showScannerView = false

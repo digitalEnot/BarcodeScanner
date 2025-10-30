@@ -40,11 +40,12 @@ struct ScannedCodeDetailsView: View {
                     scannedDate
                 case .barcode:
                     if scannedCode.productName != nil {
-                        scoreMark
-                        productName
-                        brand
-                        ingredients
-                        Spacer()
+                        ScrollView {
+                            scoreMark
+                            productName
+                            brand
+                            ingredients
+                        }
                         scannedDate
                     } else {
                       contentUnavailable
