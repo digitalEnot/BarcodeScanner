@@ -15,6 +15,7 @@ class EditCodeNameViewModel: ObservableObject {
     @Published var showProgressView = true
     @Published var presentError = false
     
+    private var errorQueue: [EditCodeNameError] = []
     private let scannedCodeDataService = ScannedCodeDataService()
     private var cancellables = Set<AnyCancellable>()
     let scannedCode: String
@@ -25,9 +26,25 @@ class EditCodeNameViewModel: ObservableObject {
     init(scannedCode: String, codeType: CodeType) {
         self.scannedCode = scannedCode
         self.codeType = codeType
+        addSubscribers()
         checkIfCodeInDataBase()
         processCodeType(codeType: codeType)
-        addSubscribers()
+    }
+    
+    private func enqueue(_ alert: EditCodeNameError) {
+        errorQueue.append(alert)
+        if errorQueue.count == 1 {
+            error = alert
+        }
+    }
+    
+    func dequeue() {
+        if !errorQueue.isEmpty {
+            errorQueue.removeFirst()
+            if !errorQueue.isEmpty {
+                error = errorQueue.removeFirst()
+            }
+        }
     }
     
     func saveScannedCode() {
@@ -36,13 +53,13 @@ class EditCodeNameViewModel: ObservableObject {
             do {
                 try ScannedCodeEntity.saveQrCode(link: scannedCode, title: title, context: context)
             } catch {
-                self.error = .cantSaveCode
+                enqueue(.cantSaveCode)
             }
         case .barcode:
             do {
                 try ScannedCodeEntity.saveBarcode(scannedCodeData, code: scannedCode, title: title, context: context)
             } catch {
-                self.error = .cantSaveCode
+                enqueue(.cantSaveCode)
             }
         }
     }
@@ -51,15 +68,14 @@ class EditCodeNameViewModel: ObservableObject {
         do {
             let result = try ScannedCodeEntity.isCodeAlreadySaved(code: scannedCode, type: codeType, context: context)
             if result {
-                error = .codeAlreadySaved
+                enqueue(.codeAlreadySaved)
             }
         } catch {
-            self.error = .cantRetrieveCode
+            enqueue(.cantRetrieveCode)
         }
     }
     
-    private func processCodeType(codeType: CodeType?) {
-        guard let codeType else { error = .codeTypeIsNil; return }
+    private func processCodeType(codeType: CodeType) {
         switch codeType {
         case .qr:
             showProgressView = false
@@ -75,7 +91,7 @@ class EditCodeNameViewModel: ObservableObject {
                 guard let self else { return }
                 guard let returnedData else {
                     showProgressView = false
-                    error = .noInfoForCode
+                    enqueue(.noInfoForCode)
                     return
                 }
                 scannedCodeData = returnedData
@@ -88,7 +104,10 @@ class EditCodeNameViewModel: ObservableObject {
             .dropFirst()
             .sink { [weak self] error in
                 guard let _ = error, let self else { return }
-                presentError = true
+                presentError = false
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) { [weak self] in
+                    self?.presentError = true
+                }
             }
             .store(in: &cancellables)
     }

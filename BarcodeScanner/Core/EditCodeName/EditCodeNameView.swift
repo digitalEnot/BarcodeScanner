@@ -90,10 +90,11 @@ extension EditCodeNameView {
     private func errorActions(error: EditCodeNameError) -> some View {
         if error == .noInfoForCode {
             Button("Ок") {
-                vm.presentError = false
+                vm.dequeue()
             }
         } else {
             Button("Ок") {
+                vm.dequeue()
                 dismiss()
             }
         }
