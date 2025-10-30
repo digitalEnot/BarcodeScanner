@@ -13,7 +13,7 @@ struct ScannedCodesRow: View {
     var body: some View {
         HStack {
             VStack(alignment: .leading) {
-                Text(title)
+                Text(scannedCode.title)
                     .font(.headline)
                     .lineLimit(1)
                 
@@ -30,10 +30,6 @@ struct ScannedCodesRow: View {
             Image(systemName: typeImage)
                 .font(.system(size: 20))
         }
-    }
-    
-    private var title: String {
-        return scannedCode.title ?? "Неизвестный код"
     }
     
     private var underTitle: String? {
@@ -53,6 +49,6 @@ struct ScannedCodesRow: View {
     }
     
     private var type: CodeType {
-        CodeType(rawValue: scannedCode.type ?? "") ?? .qr
+        CodeType(rawValue: scannedCode.type) ?? .qr
     }
 }

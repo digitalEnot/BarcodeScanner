@@ -11,7 +11,6 @@ import CoreData
 extension ScannedCodeEntity {
     static func saveQrCode(link: String, title: String, context: NSManagedObjectContext) throws {
         let codeEntity = ScannedCodeEntity(context: context)
-        codeEntity.id = UUID()
         codeEntity.title = title
         codeEntity.scannedDate = Date()
         codeEntity.link = link
@@ -23,7 +22,6 @@ extension ScannedCodeEntity {
     static func saveBarcode(_ scannedCode: ScannedCode?, code: String, title: String, context: NSManagedObjectContext) throws {
         let codeEntity = ScannedCodeEntity(context: context)
         
-        codeEntity.id = UUID()
         codeEntity.title = title
         codeEntity.scannedDate = Date()
         codeEntity.type = "barcode"
@@ -50,12 +48,32 @@ extension ScannedCodeEntity {
     
     static func isCodeAlreadySaved(code: String, type: CodeType, context: NSManagedObjectContext) throws -> Bool {
         let request: NSFetchRequest<ScannedCodeEntity> = ScannedCodeEntity.fetchRequest()
-        request.predicate = NSPredicate(format: "code == %@ AND type == %@", code, type.rawValue)
+        request.predicate = NSPredicate(format: "code_ == %@ AND type_ == %@", code, type.rawValue)
         let scannedCode = try context.fetch(request).first
         if scannedCode != nil {
             return true
         } else {
             return false
         }
+    }
+    
+    var scannedDate: Date {
+        get { scannedDate_ ?? Date() }
+        set { scannedDate_ = newValue }
+    }
+    
+    var code: String {
+        get { code_ ?? "" }
+        set { code_ = newValue }
+    }
+    
+    var title: String {
+        get { title_ ?? "" }
+        set { title_ = newValue }
+    }
+    
+    var type: String {
+        get { type_ ?? "" }
+        set { type_ = newValue }
     }
 }

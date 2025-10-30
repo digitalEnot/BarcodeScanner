@@ -16,7 +16,7 @@
 		73ABFC6D2EA51A5A007645C8 /* BarcodeScannerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73ABFC662EA51A5A007645C8 /* BarcodeScannerApp.swift */; };
 		73ABFC6E2EA51A5A007645C8 /* ScannedCodesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73ABFC672EA51A5A007645C8 /* ScannedCodesListView.swift */; };
 		73ABFC6F2EA51A5A007645C8 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73ABFC682EA51A5A007645C8 /* Persistence.swift */; };
-		73ABFC712EA51A71007645C8 /* ScannedCode+helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73ABFC702EA51A71007645C8 /* ScannedCode+helper.swift */; };
+		73ABFC712EA51A71007645C8 /* ScannedCodeEntity+helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73ABFC702EA51A71007645C8 /* ScannedCodeEntity+helper.swift */; };
 		73ABFC732EA51D9A007645C8 /* ScannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73ABFC722EA51D9A007645C8 /* ScannerView.swift */; };
 		73ABFC9D2EA53E57007645C8 /* ScannedCodesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73ABFC9C2EA53E57007645C8 /* ScannedCodesListViewModel.swift */; };
 		73ABFCA02EA54B72007645C8 /* ScannerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73ABFC9F2EA54B72007645C8 /* ScannerViewModel.swift */; };
@@ -41,7 +41,7 @@
 		73ABFC672EA51A5A007645C8 /* ScannedCodesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedCodesListView.swift; sourceTree = "<group>"; };
 		73ABFC682EA51A5A007645C8 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		73ABFC6A2EA51A5A007645C8 /* BarcodeScanner.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BarcodeScanner.xcdatamodel; sourceTree = "<group>"; };
-		73ABFC702EA51A71007645C8 /* ScannedCode+helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScannedCode+helper.swift"; sourceTree = "<group>"; };
+		73ABFC702EA51A71007645C8 /* ScannedCodeEntity+helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ScannedCodeEntity+helper.swift"; sourceTree = "<group>"; };
 		73ABFC722EA51D9A007645C8 /* ScannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerView.swift; sourceTree = "<group>"; };
 		73ABFC9C2EA53E57007645C8 /* ScannedCodesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedCodesListViewModel.swift; sourceTree = "<group>"; };
 		73ABFC9F2EA54B72007645C8 /* ScannerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannerViewModel.swift; sourceTree = "<group>"; };
@@ -115,7 +115,7 @@
 		73ABFC982EA53D0C007645C8 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				73ABFC702EA51A71007645C8 /* ScannedCode+helper.swift */,
+				73ABFC702EA51A71007645C8 /* ScannedCodeEntity+helper.swift */,
 				73ABFC682EA51A5A007645C8 /* Persistence.swift */,
 			);
 			path = CoreData;
@@ -300,7 +300,7 @@
 				73BCB93A2EA80CEE004B6A1A /* NetworkManager.swift in Sources */,
 				73D956772EAEB600002D0A04 /* ScannedCodeDetailsView.swift in Sources */,
 				73ABFC732EA51D9A007645C8 /* ScannerView.swift in Sources */,
-				73ABFC712EA51A71007645C8 /* ScannedCode+helper.swift in Sources */,
+				73ABFC712EA51A71007645C8 /* ScannedCodeEntity+helper.swift in Sources */,
 				73ABFC6F2EA51A5A007645C8 /* Persistence.swift in Sources */,
 				73BCB9372EA6B29E004B6A1A /* CameraVC.swift in Sources */,
 				73BCB93D2EA80EC5004B6A1A /* ScannedCodeDataService.swift in Sources */,

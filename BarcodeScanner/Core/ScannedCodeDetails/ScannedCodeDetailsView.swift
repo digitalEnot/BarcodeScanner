@@ -61,7 +61,7 @@ struct ScannedCodeDetailsView: View {
                 }
             }
         }
-        .navigationTitle(scannedCode.title ?? "")
+        .navigationTitle(scannedCode.title)
         .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             withAnimation(.linear(duration: 0.5)) {
@@ -77,7 +77,7 @@ struct ScannedCodeDetailsView: View {
             if let brand = scannedCode.brand {
                 text += "Бренд: \(brand)\n"
             }
-            text += "Штрих-код: \(scannedCode.code ?? "-")"
+            text += "Штрих-код: \(scannedCode.code)"
         } else {
             text = "QR-код: \(scannedCode.link ?? "-")"
         }
@@ -101,7 +101,7 @@ struct ScannedCodeDetailsView: View {
     }
     
     private var type: CodeType {
-        CodeType(rawValue: scannedCode.type ?? "") ?? .qr
+        CodeType(rawValue: scannedCode.type) ?? .qr
     }
     
     private var scoreMark: some View {
@@ -112,7 +112,7 @@ struct ScannedCodeDetailsView: View {
                 VStack {
                     Spacer(minLength: 0)
                     RoundedRectangle(cornerRadius: 35)
-                        .fill(Color(nutriScoreText))
+                        .fill(Color(nutriScoreColorName))
                         .frame(width: 80, height: height)
                 }
                 .frame(height: 120)
@@ -127,6 +127,10 @@ struct ScannedCodeDetailsView: View {
         } else {
             return "?"
         }
+    }
+    
+    private var nutriScoreColorName: String {
+        return nutriScoreText == "?" ? "noInfo" : nutriScoreText
     }
     
     private var productName: some View {
@@ -151,7 +155,7 @@ struct ScannedCodeDetailsView: View {
     }
     
     private var scannedDate: some View {
-        Text("Отсканирован: \(formatter.string(from: scannedCode.scannedDate ?? Date()))")
+        Text("Отсканирован: \(formatter.string(from: scannedCode.scannedDate))")
             .font(.system(size: 12))
             .foregroundStyle(Color.secondary)
             .frame(maxWidth: .infinity, alignment: .center)
